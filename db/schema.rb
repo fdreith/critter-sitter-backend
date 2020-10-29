@@ -19,16 +19,15 @@ ActiveRecord::Schema.define(version: 2020_10_23_020505) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["owner_id"], name: "index_households_on_owner_id"
   end
 
   create_table "user_households", force: :cascade do |t|
-    t.integer "owner_id", null: false
+    t.integer "user_id", null: false
     t.integer "household_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["household_id"], name: "index_user_households_on_household_id"
-    t.index ["owner_id"], name: "index_user_households_on_owner_id"
+    t.index ["user_id"], name: "index_user_households_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,7 +39,6 @@ ActiveRecord::Schema.define(version: 2020_10_23_020505) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "households", "owners"
   add_foreign_key "user_households", "households"
-  add_foreign_key "user_households", "owners"
+  add_foreign_key "user_households", "users"
 end
