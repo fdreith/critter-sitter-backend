@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_020505) do
+ActiveRecord::Schema.define(version: 2020_10_30_035747) do
+
+  create_table "care_reminders", force: :cascade do |t|
+    t.integer "pet_id", null: false
+    t.string "type"
+    t.string "details"
+    t.datetime "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pet_id"], name: "index_care_reminders_on_pet_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "pet_id", null: false
+    t.integer "user_id", null: false
+    t.string "type"
+    t.string "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pet_id"], name: "index_events_on_pet_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
+  end
 
   create_table "households", force: :cascade do |t|
     t.string "name"
@@ -19,6 +40,24 @@ ActiveRecord::Schema.define(version: 2020_10_23_020505) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pets", force: :cascade do |t|
+    t.string "name"
+    t.string "care"
+    t.integer "household_id"
+    t.integer "owner_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "records", force: :cascade do |t|
+    t.integer "pet_id", null: false
+    t.string "type"
+    t.string "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pet_id"], name: "index_records_on_pet_id"
   end
 
   create_table "user_households", force: :cascade do |t|
@@ -39,6 +78,10 @@ ActiveRecord::Schema.define(version: 2020_10_23_020505) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "care_reminders", "pets"
+  add_foreign_key "events", "pets"
+  add_foreign_key "events", "users"
+  add_foreign_key "records", "pets"
   add_foreign_key "user_households", "households"
   add_foreign_key "user_households", "users"
 end

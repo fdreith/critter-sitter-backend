@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pet: one
+  name: MyString
+  details: MyString
+  date: 2020-10-29 20:25:33
+
+two:
+  pet: two
+  name: MyString
+  details: MyString
+  date: 2020-10-29 20:25:33

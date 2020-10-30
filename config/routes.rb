@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :care_reminders
+  resources :records
+  resources :events
+  resources :pets
   resources :user_households
   resources :households
   resources :users
