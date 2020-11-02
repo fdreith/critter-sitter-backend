@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_035747) do
 
   create_table "care_reminders", force: :cascade do |t|
     t.integer "pet_id", null: false
-    t.string "type"
+    t.string "care_type"
     t.string "details"
     t.datetime "date"
     t.datetime "created_at", precision: 6, null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_035747) do
   create_table "events", force: :cascade do |t|
     t.integer "pet_id", null: false
     t.integer "user_id", null: false
-    t.string "type"
+    t.string "event_type"
     t.string "details"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_035747) do
 
   create_table "records", force: :cascade do |t|
     t.integer "pet_id", null: false
-    t.string "type"
+    t.string "record_type"
     t.string "details"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
