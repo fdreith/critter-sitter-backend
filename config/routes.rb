@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'sessions/create'
+  get 'sessions/get_current_user'
+  get 'sessions/destroy'
   scope '/api' do 
     resources :care_reminders
     resources :records
