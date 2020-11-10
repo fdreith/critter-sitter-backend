@@ -1,4 +1,4 @@
-class CareRemindersController < ApplicationController
+class Api::V1::CareRemindersController < ApplicationController
   before_action :set_care_reminder, only: [:show, :update, :destroy]
 
   # GET /care_reminders
