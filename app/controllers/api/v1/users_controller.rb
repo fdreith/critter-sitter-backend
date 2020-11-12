@@ -5,8 +5,7 @@ class Api::V1::UsersController < ApplicationController
   def index
     @users = User.all
 
-    render jsonapi: @users, include: [:households, ]],
-    fields: {}
+    render jsonapi: @users
   end
 
   # GET /users/1
