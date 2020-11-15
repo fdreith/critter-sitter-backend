@@ -5,12 +5,12 @@ class Api::V1::HouseholdsController < ApplicationController
   def index
     @households = Household.all
 
-    render json: @households
+    render json: JSONAPI::Serializer.serialize(@households, is_collection: true, include: ['owner', 'users', 'pets'])
   end
 
   # GET /households/1
   def show
-    render json: @household
+    render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
   end
 
   # POST /households
@@ -18,7 +18,7 @@ class Api::V1::HouseholdsController < ApplicationController
     @household = Household.new(household_params)
 
     if @household.save
-      render json: @household, status: :created, location: @household
+      render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets']), status: :created, location: @household
     else
       render json: @household.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Api::V1::HouseholdsController < ApplicationController
   # PATCH/PUT /households/1
   def update
     if @household.update(household_params)
-      render json: @household
+      render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
     else
       render json: @household.errors, status: :unprocessable_entity
     end
