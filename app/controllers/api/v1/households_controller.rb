@@ -10,7 +10,7 @@ class Api::V1::HouseholdsController < ApplicationController
 
   # GET /households/1
   def show
-    render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
+    render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets', 'pets.events', 'pets.events.user'])
   end
 
   # POST /households

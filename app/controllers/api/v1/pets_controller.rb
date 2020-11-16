@@ -5,13 +5,13 @@ class Api::V1::PetsController < ApplicationController
   def index
     @pets = Pet.all
 
-    render json: JSONAPI::Serializer.serialize(@pets, is_collection: true, include: ['owner', 'household', 'records', 'care-reminders', 'events'])
+    render json: JSONAPI::Serializer.serialize(@pets, is_collection: true, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
 
   end
 
   # GET /pets/1
   def show
-    render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events'])
+    render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
   end
 
   # POST /pets
@@ -19,7 +19,7 @@ class Api::V1::PetsController < ApplicationController
     @pet = Pet.new(pet_params)
 
     if @pet.save
-      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events']), status: :created, location: @pet
+      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user']), status: :created, location: @pet
     else
       render json: @pet.errors, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class Api::V1::PetsController < ApplicationController
   # PATCH/PUT /pets/1
   def update
     if @pet.update(pet_params)
-      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events'])
+      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
     else
       render json: @pet.errors, status: :unprocessable_entity
     end

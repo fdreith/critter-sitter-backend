@@ -4,7 +4,7 @@ class Api::V1::SessionsController < ApplicationController
 
     if @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
-      render json: JSONAPI::Serializer.serialize(@user, include: ['owned-pets', 'households', 'owned-households', 'events']), status: :ok
+      render json: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :ok
     else
       render json: {
         error: "Invalid Credentials"
@@ -14,7 +14,7 @@ class Api::V1::SessionsController < ApplicationController
 
   def get_current_user
     if logged_in?
-      render json: JSONAPI::Serializer.serialize(@current_user, include: ['owned-pets', 'households', 'owned-households', 'events'])
+      render json: JSONAPI::Serializer.serialize(@current_user, include: [ 'households'])
     else
       render json: {
         error: "No one logged in"

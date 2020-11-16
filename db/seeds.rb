@@ -19,9 +19,9 @@ stanford = Household.create(name: "Stanford", address: "123 Stanford St",owner_i
 
 
 
-wyatt = Pet.create(name: "Wyatt", care: "1.5 cups twice a day", household_id: tibbetts.id, owner_id: brian.id)
+wyatt = Pet.create(name: "Wyatt", care: "1.5 cups twice a day", household_id: tibbetts.id, owner_id: mike.id)
 penny = Pet.create(name: "Penelope", care: "1.5 cups twice a day", household_id: stanford.id, owner_id: frank.id)
-willy = Pet.create(name: "Willy", care: "1.5 cups twice a day", household_id: tibbetts.id, owner_id: mike.id)
+willy = Pet.create(name: "Willy", care: "1.5 cups twice a day", household_id: stanford.id, owner_id: brian.id)
 
 
 Event.create(pet_id: wyatt.id, user_id: frank.id, event_type: "Fed", details: "2 cups")
