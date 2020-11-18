@@ -18,7 +18,7 @@ class Api::V1::EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user']), status: :created, location: @event
+      render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user']), status: :created
     else
       render json: JSONAPI::Serializer.serialize_errors(@event.errors)
     end

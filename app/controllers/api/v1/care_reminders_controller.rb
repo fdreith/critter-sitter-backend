@@ -18,7 +18,7 @@ class Api::V1::CareRemindersController < ApplicationController
     @care_reminder = CareReminder.new(care_reminder_params)
 
     if @care_reminder.save
-      render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet']), status: :created, location: @care_reminder
+      render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet']), status: :created
     else
       render json: JSONAPI::Serializer.serialize_errors(@care_reminder.errors)
     end

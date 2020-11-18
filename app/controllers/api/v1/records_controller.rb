@@ -18,7 +18,7 @@ class Api::V1::RecordsController < ApplicationController
     @record = Record.new(record_params)
 
     if @record.save
-      render json: JSONAPI::Serializer.serialize(@record,  include: ['pet']), status: :created, location: @record
+      render json: JSONAPI::Serializer.serialize(@record,  include: ['pet']), status: :created
     else
       render json: JSONAPI::Serializer.serialize_errors(@record.errors)
     end

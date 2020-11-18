@@ -19,7 +19,7 @@ class Api::V1::PetsController < ApplicationController
     @pet = Pet.new(pet_params)
 
     if @pet.save
-      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user']), status: :created, location: @pet
+      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user']), status: :created
     else
       render json: JSONAPI::Serializer.serialize_errors(@pet.errors)
     end

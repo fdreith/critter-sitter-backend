@@ -15,12 +15,10 @@ class Api::V1::HouseholdsController < ApplicationController
 
   # POST /households
   def create
-    #!!!! NOT SAVING HOUSEHOLD
-    binding.pry
     @household = Household.new(household_params)
     if @household.save
       @household.users << current_user
-      render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets']), status: :created, location: @household
+      render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets']), status: :created
     else
       render json: JSONAPI::Serializer.serialize_errors(@household.errors)
     end
@@ -48,6 +46,6 @@ class Api::V1::HouseholdsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def household_params
-      params.require(:household).permit(:name, :address, :owner_id, :password_digest)
+      params.require(:household).permit(:name, :address, :owner_id, :password)
     end
 end

@@ -10,18 +10,16 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render jsonapi: JSONAPI::Serializer.serialize(@user, include:  ['households'])
+    render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households'])
   end
 
   # POST /users
   def create
-    binding.pry
     @user = User.new(user_params)
 
     if @user.save
-      render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :created, location: @user
+      render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :created
     else
-      binding.pry
       render json: JSONAPI::Serializer.serialize_errors(@user.errors)
     end
   end
@@ -48,6 +46,6 @@ class Api::V1::UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password_digest)
+      params.require(:user).permit(:first_name, :last_name, :email, :password)
     end
 end
