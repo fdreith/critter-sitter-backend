@@ -6,9 +6,8 @@ class Api::V1::SessionsController < ApplicationController
       session[:user_id] = @user.id
       render json: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :ok
     else
-      render json: {
-        error: "Invalid Credentials"
-      }
+      errors = [{ "title": "Invalid Credentials", "detail": "You entered the wrong email or password." }]
+      render json: JSONAPI::Serializer.serialize_errors(errors)
     end
   end
 
@@ -16,9 +15,8 @@ class Api::V1::SessionsController < ApplicationController
     if logged_in?
       render json: JSONAPI::Serializer.serialize(@current_user, include: [ 'households'])
     else
-      render json: {
-        error: "No one logged in"
-      }
+      errors = [{ "title": "No One Logged In", "detail": "You must be logged in." }]
+      render json: JSONAPI::Serializer.serialize_errors(errors)
     end
   end
 

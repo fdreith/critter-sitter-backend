@@ -10,17 +10,19 @@ class Api::V1::HouseholdsController < ApplicationController
 
   # GET /households/1
   def show
-    render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets', 'pets.events', 'pets.events.user'])
+    render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
   end
 
   # POST /households
   def create
+    #!!!! NOT SAVING HOUSEHOLD
+    binding.pry
     @household = Household.new(household_params)
-
     if @household.save
+      @household.users << current_user
       render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets']), status: :created, location: @household
     else
-      render json: @household.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@household.errors)
     end
   end
 
@@ -29,7 +31,7 @@ class Api::V1::HouseholdsController < ApplicationController
     if @household.update(household_params)
       render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
     else
-      render json: @household.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@household.errors)
     end
   end
 
@@ -46,6 +48,6 @@ class Api::V1::HouseholdsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def household_params
-      params.require(:household).permit(:name, :address, :user_id, :password_digest)
+      params.require(:household).permit(:name, :address, :owner_id, :password_digest)
     end
 end

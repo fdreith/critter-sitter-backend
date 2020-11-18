@@ -20,7 +20,7 @@ class Api::V1::EventsController < ApplicationController
     if @event.save
       render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user']), status: :created, location: @event
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@event.errors)
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::EventsController < ApplicationController
     if @event.update(event_params)
       render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user'])
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@event.errors)
     end
   end
 

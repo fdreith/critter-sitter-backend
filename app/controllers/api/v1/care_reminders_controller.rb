@@ -20,7 +20,7 @@ class Api::V1::CareRemindersController < ApplicationController
     if @care_reminder.save
       render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet']), status: :created, location: @care_reminder
     else
-      render json: @care_reminder.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@care_reminder.errors)
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::CareRemindersController < ApplicationController
     if @care_reminder.update(care_reminder_params)
       render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet'])
     else
-      render json: @care_reminder.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@care_reminder.errors)
     end
   end
 

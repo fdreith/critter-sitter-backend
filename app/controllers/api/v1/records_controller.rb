@@ -20,7 +20,7 @@ class Api::V1::RecordsController < ApplicationController
     if @record.save
       render json: JSONAPI::Serializer.serialize(@record,  include: ['pet']), status: :created, location: @record
     else
-      render json: @record.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@record.errors)
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::RecordsController < ApplicationController
     if @record.update(record_params)
       render json: JSONAPI::Serializer.serialize(@record,  include: ['pet'])
     else
-      render json: @record.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@record.errors)
     end
   end
 

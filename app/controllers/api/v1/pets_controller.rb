@@ -21,7 +21,7 @@ class Api::V1::PetsController < ApplicationController
     if @pet.save
       render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user']), status: :created, location: @pet
     else
-      render json: @pet.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@pet.errors)
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::PetsController < ApplicationController
     if @pet.update(pet_params)
       render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
     else
-      render json: @pet.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@pet.errors)
     end
   end
 

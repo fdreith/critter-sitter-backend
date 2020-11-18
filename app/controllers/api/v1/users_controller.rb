@@ -15,12 +15,14 @@ class Api::V1::UsersController < ApplicationController
 
   # POST /users
   def create
+    binding.pry
     @user = User.new(user_params)
 
     if @user.save
       render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      binding.pry
+      render json: JSONAPI::Serializer.serialize_errors(@user.errors)
     end
   end
 
@@ -29,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.update(user_params)
       render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households'])
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: JSONAPI::Serializer.serialize_errors(@user.errors)
     end
   end
 
