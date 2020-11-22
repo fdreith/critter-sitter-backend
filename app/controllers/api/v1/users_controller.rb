@@ -4,13 +4,13 @@ class Api::V1::UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
-    render jsonapi: JSONAPI::Serializer.serialize(@users, is_collection: true, include:  ['households'])
+    
+    render json: JSONAPI::Serializer.serialize(@users, is_collection: true, include:  ['households'])
   end
 
   # GET /users/1
   def show
-    render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households'])
+    render json: JSONAPI::Serializer.serialize(@user, include: ['households'])
   end
 
   # POST /users
@@ -18,7 +18,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :created
+      render json: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :created
     else
       render json: JSONAPI::Serializer.serialize_errors(@user.errors)
     end
@@ -27,7 +27,7 @@ class Api::V1::UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render jsonapi: JSONAPI::Serializer.serialize(@user, include: ['households'])
+      render json: JSONAPI::Serializer.serialize(@user, include: ['households'])
     else
       render json: JSONAPI::Serializer.serialize_errors(@user.errors)
     end
