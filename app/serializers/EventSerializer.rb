@@ -1,7 +1,4 @@
-require 'jsonapi-serializers'
-
-class EventSerializer
-  include JSONAPI::Serializer
+class EventSerializer < BaseSerializer
 
   attribute :event_type
   attribute :details

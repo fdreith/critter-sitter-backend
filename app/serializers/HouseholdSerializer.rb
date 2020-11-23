@@ -1,8 +1,4 @@
-require 'jsonapi-serializers'
-
-class HouseholdSerializer
-  include JSONAPI::Serializer
-
+class HouseholdSerializer < BaseSerializer
   attribute :name
   attribute :address
   

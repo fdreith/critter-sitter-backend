@@ -1,7 +1,4 @@
-require 'jsonapi-serializers'
-
-class PetSerializer
-  include JSONAPI::Serializer
+class PetSerializer < BaseSerializer
 
   attribute :name
   attribute :care

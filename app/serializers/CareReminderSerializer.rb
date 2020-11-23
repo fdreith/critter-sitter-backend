@@ -1,7 +1,4 @@
-require 'jsonapi-serializers'
-
-class CareReminderSerializer
-  include JSONAPI::Serializer
+class CareReminderSerializer < BaseSerializer
 
   attribute :care_type
   attribute :details

@@ -1,7 +1,4 @@
-require 'jsonapi-serializers'
-
-class UserSerializer
-  include JSONAPI::Serializer
+class UserSerializer < BaseSerializer
 
   attribute :first_name
   attribute :last_name
