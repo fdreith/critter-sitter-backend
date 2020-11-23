@@ -5,12 +5,12 @@ class Api::V1::HouseholdsController < ApplicationController
   def index
     @households = Household.all
 
-    render json: JSONAPI::Serializer.serialize(@households, is_collection: true, include: ['owner', 'users', 'pets'])
+    render json: HouseholdSerializer.new(@households, include: [:owner, :users, :pets]).serializable_hash.to_json
   end
 
   # GET /households/1
   def show
-    render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
+    render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json
   end
 
   # POST /households
@@ -18,18 +18,18 @@ class Api::V1::HouseholdsController < ApplicationController
     @household = Household.new(household_params)
     if @household.save
       @household.users << current_user
-      render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets']), status: :created
+      render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json, status: :created
     else
-      render json: JSONAPI::Serializer.serialize_errors(@household.errors)
+      render json: @household.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /households/1
   def update
     if @household.update(household_params)
-      render json: JSONAPI::Serializer.serialize(@household,  include: ['owner', 'users', 'pets'])
+      render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json
     else
-      render json: JSONAPI::Serializer.serialize_errors(@household.errors)
+      render json: @household.errors, status: :unprocessable_entity
     end
   end
 

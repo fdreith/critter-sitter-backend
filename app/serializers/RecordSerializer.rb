@@ -4,6 +4,6 @@ class RecordSerializer < BaseSerializer
   attribute :details
   attribute :created_at
 
-  has_one :pet, include_data: true, include_links: false 
+  belongs_to :pet
 
 end

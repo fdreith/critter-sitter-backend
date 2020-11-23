@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_30_035747) do
+ActiveRecord::Schema.define(version: 2020_11_23_035955) do
 
   create_table "care_reminders", force: :cascade do |t|
     t.integer "pet_id", null: false
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_10_30_035747) do
     t.datetime "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
     t.index ["pet_id"], name: "index_care_reminders_on_pet_id"
   end
 

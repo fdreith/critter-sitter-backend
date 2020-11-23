@@ -4,6 +4,7 @@ class CareReminderSerializer < BaseSerializer
   attribute :details
   attribute :date
 
-  has_one :pet, include_data: true, include_links: false 
+  belongs_to :pet
+  belongs_to :user
 
 end

@@ -48,5 +48,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Serializer
-gem 'jsonapi-serializers'
+# gem 'jsonapi-serializers'
+gem 'jsonapi-serializer'
 

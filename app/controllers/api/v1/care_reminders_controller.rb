@@ -5,12 +5,12 @@ class Api::V1::CareRemindersController < ApplicationController
   def index
     @care_reminders = CareReminder.all
 
-    render json: JSONAPI::Serializer.serialize(@care_reminders,  is_collection: true, include: ['pet'])
+    render json: CareReminderSerializer.new(@care_reminders, include: [:pet, :user]).serializable_hash.to_json
   end
 
   # GET /care_reminders/1
   def show
-    render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet'])
+    render json: CareReminderSerializer.new(@care_reminder, include: [:pet, :user]).serializable_hash.to_json
   end
 
   # POST /care_reminders
@@ -18,18 +18,18 @@ class Api::V1::CareRemindersController < ApplicationController
     @care_reminder = CareReminder.new(care_reminder_params)
 
     if @care_reminder.save
-      render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet']), status: :created
+      render json: CareReminderSerializer.new(@care_reminder, include: [:pet, :user]).serializable_hash.to_json, status: :created
     else
-      render json: JSONAPI::Serializer.serialize_errors(@care_reminder.errors)
+      render json: @care_reminder.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /care_reminders/1
   def update
     if @care_reminder.update(care_reminder_params)
-      render json: JSONAPI::Serializer.serialize(@care_reminder,  include: ['pet'])
+      render json: CareReminderSerializer.new(@care_reminder, include: [:pet, :user]).serializable_hash.to_json
     else
-      render json: JSONAPI::Serializer.serialize_errors(@care_reminder.errors)
+      render json: @care_reminder.errors, status: :unprocessable_entity
     end
   end
 

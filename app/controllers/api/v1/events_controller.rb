@@ -5,12 +5,12 @@ class Api::V1::EventsController < ApplicationController
   def index
     @events = Event.all
 
-    render json: JSONAPI::Serializer.serialize(@events, is_collection: true, include: ['pet', 'user'])
+    render json: EventSerializer.new(@events, include: [:user, :pet]).serializable_hash.to_json
   end
 
   # GET /events/1
   def show
-    render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user'])
+    render json: EventSerializer.new(@event, include: [:user, :pet]).serializable_hash.to_json
   end
 
   # POST /events
@@ -18,18 +18,18 @@ class Api::V1::EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user']), status: :created
+      render json: EventSerializer.new(@event, include: [:user, :pet]).serializable_hash.to_json, status: :created
     else
-      render json: JSONAPI::Serializer.serialize_errors(@event.errors)
+      render json: @event.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      render json: JSONAPI::Serializer.serialize(@event,  include: ['pet', 'user'])
+      render json: EventSerializer.new(@event, include: [:user, :pet]).serializable_hash.to_json
     else
-      render json: JSONAPI::Serializer.serialize_errors(@event.errors)
+      render json: @event.errors, status: :unprocessable_entity
     end
   end
 

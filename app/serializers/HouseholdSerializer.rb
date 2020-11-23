@@ -3,9 +3,9 @@ class HouseholdSerializer < BaseSerializer
   attribute :address
   
   has_many :user_households
-  has_one :owner, class_name: :User, foreign_key: 'owner_id', include_data: true, include_links: false 
-  has_many :users, through: :user_households, include_data: true, include_links: false 
-  has_many :pets, include_data: true, include_links: false 
+  belongs_to :owner, serializer: :user, foreign_key: 'owner_id'
+  has_many :users, through: :user_households
+  has_many :pets
 
 
 end

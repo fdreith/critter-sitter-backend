@@ -5,12 +5,12 @@ class Api::V1::RecordsController < ApplicationController
   def index
     @records = Record.all
 
-    render json: JSONAPI::Serializer.serialize(@records, is_collection: true, include: ['pet'])
+    render json: RecordSerializer.new(@records).serializable_hash.to_json
   end
 
   # GET /records/1
   def show
-    render json: JSONAPI::Serializer.serialize(@record,  include: ['pet'])
+    render json: RecordSerializer.new(@record).serializable_hash.to_json
   end
 
   # POST /records
@@ -18,18 +18,18 @@ class Api::V1::RecordsController < ApplicationController
     @record = Record.new(record_params)
 
     if @record.save
-      render json: JSONAPI::Serializer.serialize(@record,  include: ['pet']), status: :created
+      render json: RecordSerializer.new(@record).serializable_hash.to_json, status: :created
     else
-      render json: JSONAPI::Serializer.serialize_errors(@record.errors)
+      render json: @record.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /records/1
   def update
     if @record.update(record_params)
-      render json: JSONAPI::Serializer.serialize(@record,  include: ['pet'])
+      render json: RecordSerializer.new(@record).serializable_hash.to_json
     else
-      render json: JSONAPI::Serializer.serialize_errors(@record.errors)
+      render json: @record.errors, status: :unprocessable_entity
     end
   end
 

@@ -5,12 +5,13 @@ class Api::V1::UsersController < ApplicationController
   def index
     @users = User.all
     
-    render json: JSONAPI::Serializer.serialize(@users, is_collection: true, include:  ['households'])
+    options = {is_collection: true, include:  [:households]}
+    render json: UserSerializer.new(@users, options).serializable_hash.to_json
   end
 
   # GET /users/1
   def show
-    render json: JSONAPI::Serializer.serialize(@user, include: ['households'])
+    render json: UserSerializer.new(@user, include: [:households]).serializable_hash.to_json
   end
 
   # POST /users
@@ -18,18 +19,18 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: JSONAPI::Serializer.serialize(@user, include: ['households']), status: :created
+      render json: UserSerializer.new(@user, include: [:households]).serializable_hash.to_json, status: :created
     else
-      render json: JSONAPI::Serializer.serialize_errors(@user.errors)
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: JSONAPI::Serializer.serialize(@user, include: ['households'])
+      render json: UserSerializer.new(@user, include: [:households]).serializable_hash.to_json
     else
-      render json: JSONAPI::Serializer.serialize_errors(@user.errors)
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 

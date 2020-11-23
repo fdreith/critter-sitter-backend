@@ -5,13 +5,13 @@ class Api::V1::PetsController < ApplicationController
   def index
     @pets = Pet.all
 
-    render json: JSONAPI::Serializer.serialize(@pets, is_collection: true, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
+    render json: PetSerializer.new(@pets, include: [:owner, :household, :records, :care_reminders, :events]).serializable_hash.to_json
 
   end
 
   # GET /pets/1
   def show
-    render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
+    render json: PetSerializer.new(@pet, include: [:owner, :household, :records, :care_reminders, :events]).serializable_hash.to_json
   end
 
   # POST /pets
@@ -19,18 +19,18 @@ class Api::V1::PetsController < ApplicationController
     @pet = Pet.new(pet_params)
 
     if @pet.save
-      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user']), status: :created
+      render json: PetSerializer.new(@pet, include: [:owner, :household, :records, :care_reminders, :events]).serializable_hash.to_json, status: :created
     else
-      render json: JSONAPI::Serializer.serialize_errors(@pet.errors)
+      render json: @pet.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /pets/1
   def update
     if @pet.update(pet_params)
-      render json: JSONAPI::Serializer.serialize(@pet, include: ['owner', 'household', 'records', 'care-reminders', 'events', 'events.user'])
+      render json: PetSerializer.new(@pet, include: [:owner, :household, :records, :care_reminders, :events]).serializable_hash.to_json
     else
-      render json: JSONAPI::Serializer.serialize_errors(@pet.errors)
+      render json: @pet.errors, status: :unprocessable_entity
     end
   end
 

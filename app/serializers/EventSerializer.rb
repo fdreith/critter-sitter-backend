@@ -4,7 +4,7 @@ class EventSerializer < BaseSerializer
   attribute :details
   attribute :created_at
 
-  has_one :pet, include_data: true, include_links: false 
-  has_one :user, include_data: true, include_links: false 
+  belongs_to :pet
+  belongs_to :user
 
 end
