@@ -20,7 +20,7 @@ class Api::V1::RecordsController < ApplicationController
     if @record.save
       render json: RecordSerializer.new(@record).serializable_hash.to_json, status: :created
     else
-      render json: @record.errors, status: :unprocessable_entity
+      render jsonapi_errors: @record.errors, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::RecordsController < ApplicationController
     if @record.update(record_params)
       render json: RecordSerializer.new(@record).serializable_hash.to_json
     else
-      render json: @record.errors, status: :unprocessable_entity
+      render jsonapi_errors: @record.errors, status: :unprocessable_entity
     end
   end
 

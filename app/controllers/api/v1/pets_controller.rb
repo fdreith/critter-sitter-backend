@@ -21,7 +21,7 @@ class Api::V1::PetsController < ApplicationController
     if @pet.save
       render json: PetSerializer.new(@pet, include: [:owner, :household, :records, :care_reminders, :events]).serializable_hash.to_json, status: :created
     else
-      render json: @pet.errors, status: :unprocessable_entity
+      render jsonapi_errors: @pet.errors, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::PetsController < ApplicationController
     if @pet.update(pet_params)
       render json: PetSerializer.new(@pet, include: [:owner, :household, :records, :care_reminders, :events]).serializable_hash.to_json
     else
-      render json: @pet.errors, status: :unprocessable_entity
+      render jsonapi_errors: @pet.errors, status: :unprocessable_entity
     end
   end
 

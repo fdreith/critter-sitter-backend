@@ -7,7 +7,7 @@ class Api::V1::SessionsController < ApplicationController
       render json: UserSerializer.new(@user, include: [:households]).serializable_hash.to_json, status: :ok
     else
       errors = [{ "title": "Invalid Credentials", "detail": "You entered the wrong email or password." }]
-      render json: @user.errors, status: :unprocessable_entity
+      render jsonapi_errors: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -16,7 +16,7 @@ class Api::V1::SessionsController < ApplicationController
       render json: UserSerializer.new(@current_user, include: [:households]).serializable_hash.to_json
     else
       errors = [{ "title": "No One Logged In", "detail": "You must be logged in." }]
-      render json: @current_user.errors, status: :unprocessable_entity
+      render jsonapi_errors: @current_user.errors, status: :unprocessable_entity
     end
   end
 

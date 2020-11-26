@@ -35,7 +35,7 @@ class Api::V1::HouseholdsController < ApplicationController
     if @household.update(household_params)
       render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json
     else
-      render json: @household.errors, status: :unprocessable_entity
+      render jsonapi_errors: @household.errors, status: :unprocessable_entity
     end
   end
 

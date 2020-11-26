@@ -20,7 +20,7 @@ class Api::V1::UserHouseholdsController < ApplicationController
     if @user_household.save
       render json: @user_household, status: :created, location: @user_household
     else
-      render json: @user_household.errors, status: :unprocessable_entity
+      render jsonapi_errors: @user_household.errors, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::UserHouseholdsController < ApplicationController
     if @user_household.update(user_household_params)
       render json: @user_household
     else
-      render json: @user_household.errors, status: :unprocessable_entity
+      render jsonapi_errors: @user_household.errors, status: :unprocessable_entity
     end
   end
 

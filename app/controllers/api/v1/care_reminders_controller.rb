@@ -20,7 +20,7 @@ class Api::V1::CareRemindersController < ApplicationController
     if @care_reminder.save
       render json: CareReminderSerializer.new(@care_reminder, include: [:pet, :user]).serializable_hash.to_json, status: :created
     else
-      render json: @care_reminder.errors, status: :unprocessable_entity
+      render jsonapi_errors: @care_reminder.errors, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V1::CareRemindersController < ApplicationController
     if @care_reminder.update(care_reminder_params)
       render json: CareReminderSerializer.new(@care_reminder, include: [:pet, :user]).serializable_hash.to_json
     else
-      render json: @care_reminder.errors, status: :unprocessable_entity
+      render jsonapi_errors: @care_reminder.errors, status: :unprocessable_entity
     end
   end
 

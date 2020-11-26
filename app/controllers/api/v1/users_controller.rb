@@ -21,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.save
       render json: UserSerializer.new(@user, include: [:households]).serializable_hash.to_json, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render jsonapi_errors: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.update(user_params)
       render json: UserSerializer.new(@user, include: [:households]).serializable_hash.to_json
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render jsonapi_errors: @user.errors, status: :unprocessable_entity
     end
   end
 
