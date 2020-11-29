@@ -41,6 +41,7 @@ class Api::V1::HouseholdsController < ApplicationController
 
   # DELETE /households/1
   def destroy
+    binding.pry
     @household.destroy
   end
 
