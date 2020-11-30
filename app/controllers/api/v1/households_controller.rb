@@ -19,11 +19,7 @@ class Api::V1::HouseholdsController < ApplicationController
   def create
     @household = Household.new(household_params)
     if @household.save
-      @household.users << current_user
-      user_params[:users].each do |user, v|
-        @household.users << (User.find(user[:value].to_i))
-      end
-
+      @household.users = User.find(user_params["users"])
       render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json, status: :created
     else
       render jsonapi_errors: @household.errors, status: :unprocessable_entity
@@ -33,6 +29,7 @@ class Api::V1::HouseholdsController < ApplicationController
   # PATCH/PUT /households/1
   def update
     if @household.update(household_params)
+      @household.users = User.find(user_params["users"])
       render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json
     else
       render jsonapi_errors: @household.errors, status: :unprocessable_entity
@@ -41,7 +38,11 @@ class Api::V1::HouseholdsController < ApplicationController
 
   # DELETE /households/1
   def destroy
-    @household.destroy
+    if @household.destroy
+      render json: {message: "Household Destroyed."}, status: :ok
+    else
+      render json: {error: "Household Failed To Delete."}, status: :unprocessable_entity
+    end
   end
 
   private
@@ -55,8 +56,11 @@ class Api::V1::HouseholdsController < ApplicationController
       params.require(:household).permit(:name, :address, :password, :owner_id)
     end
 
+    # def user_params
+    #   params.require(:users).permit({users: [:label, :value]})
+    # end
     def user_params
-      params.require(:users).permit({users: [:label, :value]})
+      params.require(:users).permit({users: []})
     end
 
     def render_jsonapi_internal_server_error(exception)
