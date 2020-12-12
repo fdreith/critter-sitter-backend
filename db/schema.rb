@@ -10,28 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_29_004100) do
+ActiveRecord::Schema.define(version: 2020_12_12_212524) do
 
-  create_table "care_reminders", force: :cascade do |t|
-    t.integer "pet_id", null: false
-    t.string "care_type"
+  create_table "cares", force: :cascade do |t|
+    t.integer "care_type"
+    t.string "name"
     t.string "details"
+    t.integer "pet_id"
+    t.integer "user_id"
     t.datetime "date"
+    t.string "attachment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id"
-    t.index ["pet_id"], name: "index_care_reminders_on_pet_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.integer "pet_id", null: false
-    t.integer "user_id"
-    t.string "event_type"
-    t.string "details"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["pet_id"], name: "index_events_on_pet_id"
-    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "households", force: :cascade do |t|
@@ -52,15 +42,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_004100) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "records", force: :cascade do |t|
-    t.integer "pet_id", null: false
-    t.string "record_type"
-    t.string "details"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["pet_id"], name: "index_records_on_pet_id"
-  end
-
   create_table "user_households", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "household_id", null: false
@@ -79,10 +60,6 @@ ActiveRecord::Schema.define(version: 2020_11_29_004100) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "care_reminders", "pets"
-  add_foreign_key "events", "pets"
-  add_foreign_key "events", "users"
-  add_foreign_key "records", "pets"
   add_foreign_key "user_households", "households"
   add_foreign_key "user_households", "users"
 end

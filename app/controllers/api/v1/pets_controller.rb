@@ -36,7 +36,11 @@ class Api::V1::PetsController < ApplicationController
 
   # DELETE /pets/1
   def destroy
-    @pet.destroy
+    if @pet.destroy
+      render json: {message: "Pet is deleted from records."}, status: :ok
+    else
+      render json: {error: "Pet failed to delete from records."}, status: :unprocessable_entity
+    end
   end
 
   private
