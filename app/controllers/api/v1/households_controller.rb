@@ -1,6 +1,4 @@
 class Api::V1::HouseholdsController < ApplicationController
-      include JSONAPI::Errors
-
   before_action :set_household, only: [:show, :update, :destroy]
 
   # GET /households

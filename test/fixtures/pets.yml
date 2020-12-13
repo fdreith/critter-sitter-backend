@@ -2,12 +2,12 @@
 
 one:
   name: MyString
-  care: MyString
+  care_instructions: MyString
   household_id: 1
   owner_id: 1
 
 two:
   name: MyString
-  care: MyString
+  care_instructions: MyString
   household_id: 1
   owner_id: 1
