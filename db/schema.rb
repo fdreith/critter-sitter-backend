@@ -10,7 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_13_010310) do
+ActiveRecord::Schema.define(version: 2020_12_29_012007) do
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "event_type"
+    t.string "name"
+    t.string "details"
+    t.integer "pet_id"
+    t.integer "user_id"
+    t.datetime "date"
+    t.string "attachment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "households", force: :cascade do |t|
     t.string "name"
@@ -26,18 +59,6 @@ ActiveRecord::Schema.define(version: 2020_12_13_010310) do
     t.string "care_instructions"
     t.integer "household_id"
     t.integer "owner_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "records", force: :cascade do |t|
-    t.integer "record_type"
-    t.string "name"
-    t.string "details"
-    t.integer "pet_id"
-    t.integer "user_id"
-    t.datetime "date"
-    t.string "attachment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -60,6 +81,7 @@ ActiveRecord::Schema.define(version: 2020_12_13_010310) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "user_households", "households"
   add_foreign_key "user_households", "users"
 end

@@ -4,7 +4,7 @@ class PetSerializer < BaseSerializer
   attribute :care_instructions
 
   belongs_to :household
-  has_many :records
+  has_many :events
   belongs_to :owner, serializer: :user, class_name: "User"
 
 end
