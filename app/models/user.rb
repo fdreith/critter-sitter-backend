@@ -8,6 +8,6 @@ class User < ApplicationRecord
   has_many :households, through: :user_households
   has_many :owned_households, class_name: "Household", foreign_key: "owner_id"
   has_many :owned_pets, class_name: "Pet", foreign_key: "owner_id"
-  has_many :records, :dependent => :nullify
+  has_many :events, :dependent => :nullify
   
 end

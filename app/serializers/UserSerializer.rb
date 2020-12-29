@@ -7,6 +7,6 @@ class UserSerializer < BaseSerializer
   has_many :households, through: :user_households
   has_many :owned_households, serializer: :household
   has_many :owned_pets, serializer: :pet, foreign_key: "owner_id"
-  has_many :records
+  has_many :events
 
 end

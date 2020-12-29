@@ -11,8 +11,8 @@ mike = User.create(first_name: "Mike", last_name: "Alexander", email: "a@a.com",
 wendy = User.create(first_name: "Wendy", last_name: "Boyd", email: "w@w.com", password: "password")
 brian = User.create(first_name: "Brian", last_name: "Dreith", email: "b@b.com",password: "password")
 
-tibbetts = Household.create(name: "Tibbetts", address: "123 Tibbetts St", owner_id: frank.id, password: "password")
-stanford = Household.create(name: "Stanford", address: "123 Stanford St",owner_id: brian.id, password: "password")
+tibbetts = Household.create(name: "Tibbetts", address: "123 Tibbetts St", owner_id: frank.id)
+stanford = Household.create(name: "Stanford", address: "123 Stanford St",owner_id: brian.id)
 
 UserHousehold.create(user_id: frank.id, household_id: tibbetts.id)
 UserHousehold.create(user_id: frank.id, household_id: stanford.id)

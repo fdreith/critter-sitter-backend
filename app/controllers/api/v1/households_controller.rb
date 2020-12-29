@@ -5,12 +5,12 @@ class Api::V1::HouseholdsController < ApplicationController
   def index
     @households = Household.all
 
-    render json: HouseholdSerializer.new(@households, include: [:owner, :users, :pets]).serializable_hash.to_json
+    render json: HouseholdSerializer.new(@households, include: [:owner, :users]).serializable_hash.to_json
   end
 
   # GET /households/1
   def show
-    render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json
+    render json: HouseholdSerializer.new(@household, include: [:owner, :users]).serializable_hash.to_json
   end
 
   # POST /households
@@ -18,7 +18,7 @@ class Api::V1::HouseholdsController < ApplicationController
     @household = Household.new(household_params)
     if @household.save
       @household.users = User.find(user_params["users"])
-      render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json, status: :created
+      render json: HouseholdSerializer.new(@household, include: [:owner, :users]).serializable_hash.to_json, status: :created
     else
       render jsonapi_errors: @household.errors, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class Api::V1::HouseholdsController < ApplicationController
   def update
     if @household.update(household_params)
       @household.users = User.find(user_params["users"])
-      render json: HouseholdSerializer.new(@household, include: [:owner, :users, :pets]).serializable_hash.to_json
+      render json: HouseholdSerializer.new(@household, include: [:owner, :users]).serializable_hash.to_json
     else
       render jsonapi_errors: @household.errors, status: :unprocessable_entity
     end

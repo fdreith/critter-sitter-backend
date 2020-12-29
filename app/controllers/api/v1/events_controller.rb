@@ -3,7 +3,7 @@ class Api::V1::EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = event.all
+    @events = Event.all
 
     render json: EventSerializer.new(@events).serializable_hash.to_json
   end
@@ -15,7 +15,7 @@ class Api::V1::EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = event.new(event_params)
+    @event = Event.new(event_params)
 
     if @event.save
       binding.pry
@@ -46,7 +46,7 @@ class Api::V1::EventsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
-      @event = event.find(params[:id])
+      @event = Event.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -5,7 +5,7 @@ class Api::V1::PetsController < ApplicationController
   def index
     @pets = Pet.all
 
-    render json: PetSerializer.new(@pets, include: [ :events]).serializable_hash.to_json
+    render json: PetSerializer.new(@pets, include: [ :owner, :household, :events]).serializable_hash.to_json
 
   end
 
