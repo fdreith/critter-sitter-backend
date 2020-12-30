@@ -4,13 +4,12 @@ class Api::V1::EventsController < ApplicationController
   # GET /events
   def index
     @events = Event.all
-
-    render json: EventSerializer.new(@events).serializable_hash.to_json
+    render json: EventSerializer.new(@events, include: [:pet]).serializable_hash.to_json
   end
 
   # GET /events/1
   def show
-    render json: EventSerializer.new(@event).serializable_hash.to_json
+    render json: EventSerializer.new(@event, include: [:pet]).serializable_hash.to_json
   end
 
   # POST /events
@@ -19,7 +18,7 @@ class Api::V1::EventsController < ApplicationController
 
     if @event.save
       binding.pry
-      render json: EventSerializer.new(@event).serializable_hash.to_json, status: :created
+      render json: EventSerializer.new(@event, include: [:pet]).serializable_hash.to_json, status: :created
     else
       render jsonapi_errors: @event.errors, status: :unprocessable_entity
     end
@@ -28,7 +27,7 @@ class Api::V1::EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      render json: EventSerializer.new(@event).serializable_hash.to_json
+      render json: EventSerializer.new(@event, include: [:pet]).serializable_hash.to_json
     else
       render jsonapi_errors: @event.errors, status: :unprocessable_entity
     end
