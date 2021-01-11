@@ -17,7 +17,6 @@ class Api::V1::EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      binding.pry
       render json: EventSerializer.new(@event, include: [:pet]).serializable_hash.to_json, status: :created
     else
       render jsonapi_errors: @event.errors, status: :unprocessable_entity
